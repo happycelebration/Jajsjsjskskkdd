@@ -3,5 +3,6 @@
 
 class Solution {
 public:
-string processStr(string s) { string res = ""; for (char c : s) { if (c >= 'a' && c <= 'z') { res.push_back(c); } else if (c == '*') { if (!res.empty()) res.pop_back(); } else if (c == '#') { res += res; } else if (c == '%') { reverse(res.begin(), res.end()); }}
- return res; }};
+int cameras = 0; int dfs(TreeNode* node) { if (!node) return 2; int left = dfs(node->left); int right = dfs(node->right); if (left == 0 || right == 0) {
+cameras++; return 1; } if (left == 1 || right == 1) {
+return 2; } return 0; } int minCameraCover(TreeNode* root) { if (dfs(root) == 0) { cameras++; } return cameras; }};
