@@ -3,6 +3,5 @@
 
 class Solution {
 public:
-int cameras = 0; int dfs(TreeNode* node) { if (!node) return 2; int left = dfs(node->left); int right = dfs(node->right); if (left == 0 || right == 0) {
-cameras++; return 1; } if (left == 1 || right == 1) {
-return 2; } return 0; } int minCameraCover(TreeNode* root) { if (dfs(root) == 0) { cameras++; } return cameras; }};
+vector<int> pancakeSort(vector<int>& arr) { vector<int> res; int n = arr.size(); for (int i = n; i > 1; --i) { int idx = 0; for (int j = 0; j < i; ++j) { if (arr[j] == i) { idx = j; break; }} if (idx == i - 1) continue; if (idx != 0) { reverse(arr.begin(), arr.begin() + idx + 1);
+res.push_back(idx + 1); } reverse(arr.begin(), arr.begin() + i); res.push_back(i); } return res; }};
