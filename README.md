@@ -3,6 +3,6 @@
 
 class Solution {
 public:
-vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-priority_queue<pair<int, vector<int>>> pq; for (auto &p : points) { int dist = p[0]*p[0] + p[1]*p[1]; pq.push({dist, p}); if (pq.size() > k) { pq.pop(); }} vector<vector<int>> res; while (!pq.empty()) {
-res.push_back(pq.top().second); pq.pop(); } return res; }};
+int subarraysDivByK(vector<int>& nums, int k) {
+unordered_map<int, int> freq; freq[0] = 1;  int prefixSum = 0; int count = 0; for (int num : nums) {
+prefixSum += num; int rem = prefixSum % k; if (rem < 0) rem += k; if (freq.count(rem)) { count += freq[rem]; } freq[rem]++; } return count; }};
