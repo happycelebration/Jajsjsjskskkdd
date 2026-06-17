@@ -3,4 +3,5 @@
 
 class Solution {
 public:
-vector<int> sortedSquares(vector<int>& nums) { int n = nums.size(); vector<int> res(n); int left = 0, right = n - 1; int pos = n - 1; while (left <= right) { if (abs(nums[left]) > abs(nums[right])) { res[pos--] = nums[left] * nums[left]; left++; } else { res[pos--] = nums[right] * nums[right]; right--; }} return res; }};
+char processStr(string s, long long k) { long long len = 0; for (char c : s) { if (c == '*') { if (len > 0) len--;
+} else if (c == '#') { len *= 2; } else if (c == '%') { } else { len++; }} if (k >= len) return '.'; for (int i = s.size() - 1; i >= 0; --i) { char c = s[i]; if (c == '*') { len++; } else if (c == '#') { len /= 2; if (k >= len) k -= len; } else if (c == '%') { k = len - 1 - k; } else { if (k == len - 1) return c; len--; }} return '.'; }};
