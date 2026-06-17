@@ -3,5 +3,5 @@
 
 class Solution {
 public:
-int maxTurbulenceSize(vector<int>& arr) { int n = arr.size(); if (n == 1) return 1; int inc = 1, dec = 1; int ans = 1; for (int i = 1; i < n; i++) { if (arr[i] > arr[i - 1]) { inc = dec + 1; dec = 1; } else if (arr[i] < arr[i - 1]) { dec = inc + 1; inc = 1; } else { inc = dec = 1; }
-ans = max(ans, max(inc, dec)); } return ans; }};
+vector<int> pancakeSort(vector<int>& arr) {
+vector<int> res; int n = arr.size(); for (int curr = n; curr > 1; curr--) { int idx = find(arr.begin(), arr.end(), curr) - arr.begin(); if (idx == curr - 1) continue; if (idx != 0) { reverse(arr.begin(), arr.begin() + idx + 1); res.push_back(idx + 1); } reverse(arr.begin(), arr.begin() + curr); res.push_back(curr); } return res; }};
