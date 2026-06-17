@@ -3,5 +3,6 @@
 
 class Solution {
 public:
-char processStr(string s, long long k) { long long len = 0; for (char c : s) { if (c == '*') { if (len > 0) len--;
-} else if (c == '#') { len *= 2; } else if (c == '%') { } else { len++; }} if (k >= len) return '.'; for (int i = s.size() - 1; i >= 0; --i) { char c = s[i]; if (c == '*') { len++; } else if (c == '#') { len /= 2; if (k >= len) k -= len; } else if (c == '%') { k = len - 1 - k; } else { if (k == len - 1) return c; len--; }} return '.'; }};
+vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+priority_queue<pair<int, vector<int>>> pq; for (auto &p : points) { int dist = p[0]*p[0] + p[1]*p[1]; pq.push({dist, p}); if (pq.size() > k) { pq.pop(); }} vector<vector<int>> res; while (!pq.empty()) {
+res.push_back(pq.top().second); pq.pop(); } return res; }};
