@@ -3,7 +3,12 @@
 
 class Solution {
 public:
-vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) { int evenSum = 0; for (int x : nums) { if (x % 2 == 0)
- evenSum += x; } vector<int> ans; for (auto &q : queries) { int val = q[0];bint idx = q[1]; if (nums[idx] % 2 == 0) evenSum -= nums[idx]; nums[idx] += val;
- if (nums[idx] % 2 == 0) evenSum += nums[idx];
-ans.push_back(evenSum); } return ans; }};
+ int maxBuilding(int n, vector<vector<int>>& restrictions) { restrictions.push_back({1, 0});
+sort(restrictions.begin(), restrictions.end());
+if (restrictions.back()[0] != n) { restrictions.push_back({n, n - 1}); } int m = restrictions.size();
+for (int i = 1; i < m; i++) { restrictions[i][1] = min(
+restrictions[i][1], restrictions[i - 1][1] +
+ (restrictions[i][0] - restrictions[i - 1][0]) ); } for (int i = m - 2; i >= 0; i--) { restrictions[i][1] = min(
+restrictions[i][1], restrictions[i + 1][1] +
+(restrictions[i + 1][0] - restrictions[i][0]) );} long long ans = 0; for (int i = 0; i < m - 1; i++) {
+long long x1 = restrictions[i][0]; long long h1 = restrictions[i][1]; long long x2 = restrictions[i + 1][0]; long long h2 = restrictions[i + 1][1]; long long peak = (h1 + h2 + (x2 - x1)) / 2; ans = max(ans, peak); } return (int)ans; }};
