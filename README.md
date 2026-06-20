@@ -3,8 +3,8 @@
 
 class Solution {
 public:
-string shortestCommonSupersequence(string str1, string str2) { int n = str1.size(); int m = str2.size(); vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0)); for (int i = 1; i <= n; i++) {
-for (int j = 1; j <= m; j++) { if (str1[i - 1] == str2[j - 1]) { dp[i][j] = 1 + dp[i - 1][j - 1]; } else { dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]); }}} string ans; int i = n;
-int j = m; while (i > 0 && j > 0) { if (str1[i - 1] == str2[j - 1]) { ans.push_back(str1[i - 1]); i--; j--; } else if (dp[i - 1][j] > dp[i][j - 1]) { ans.push_back(str1[i - 1]); i--; } else { ans.push_back(str2[j - 1]); j--; }}
-while (i > 0) { ans.push_back(str1[i - 1]); i--; } while (j > 0) { ans.push_back(str2[j - 1]); j--; }
- reverse(ans.begin(), ans.end()); return ans; }};
+vector<double> sampleStats(vector<int>& count) {
+int mn = -1; int mx = -1; int mode = 0; long long sum = 0; long long total = 0; int maxFreq = 0; for (int i = 0; i < 256; i++) { if (count[i] > 0) { if (mn == -1) mn = i; mx = i; sum += 1LL * i * count[i]; total += count[i]; if (count[i] > maxFreq) { maxFreq = count[i]; mode = i; }}} auto kth = [&](long long k) -> int { long long pref = 0; for (int i = 0; i < 256; i++) {
+pref += count[i]; if (pref >= k) return i; } return -1; };
+double median; if (total % 2 == 1) { median = kth(total / 2 + 1); } else { int a = kth(total / 2); int b = kth(total / 2 + 1); median = (a + b) / 2.0; }
+ return { (double)mn, (double)mx, (double)sum / total, median, (double)mode };}};
