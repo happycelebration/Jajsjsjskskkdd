@@ -3,12 +3,8 @@
 
 class Solution {
 public:
- int maxBuilding(int n, vector<vector<int>>& restrictions) { restrictions.push_back({1, 0});
-sort(restrictions.begin(), restrictions.end());
-if (restrictions.back()[0] != n) { restrictions.push_back({n, n - 1}); } int m = restrictions.size();
-for (int i = 1; i < m; i++) { restrictions[i][1] = min(
-restrictions[i][1], restrictions[i - 1][1] +
- (restrictions[i][0] - restrictions[i - 1][0]) ); } for (int i = m - 2; i >= 0; i--) { restrictions[i][1] = min(
-restrictions[i][1], restrictions[i + 1][1] +
-(restrictions[i + 1][0] - restrictions[i][0]) );} long long ans = 0; for (int i = 0; i < m - 1; i++) {
-long long x1 = restrictions[i][0]; long long h1 = restrictions[i][1]; long long x2 = restrictions[i + 1][0]; long long h2 = restrictions[i + 1][1]; long long peak = (h1 + h2 + (x2 - x1)) / 2; ans = max(ans, peak); } return (int)ans; }};
+string shortestCommonSupersequence(string str1, string str2) { int n = str1.size(); int m = str2.size(); vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0)); for (int i = 1; i <= n; i++) {
+for (int j = 1; j <= m; j++) { if (str1[i - 1] == str2[j - 1]) { dp[i][j] = 1 + dp[i - 1][j - 1]; } else { dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]); }}} string ans; int i = n;
+int j = m; while (i > 0 && j > 0) { if (str1[i - 1] == str2[j - 1]) { ans.push_back(str1[i - 1]); i--; j--; } else if (dp[i - 1][j] > dp[i][j - 1]) { ans.push_back(str1[i - 1]); i--; } else { ans.push_back(str2[j - 1]); j--; }}
+while (i > 0) { ans.push_back(str1[i - 1]); i--; } while (j > 0) { ans.push_back(str2[j - 1]); j--; }
+ reverse(ans.begin(), ans.end()); return ans; }};
