@@ -3,10 +3,6 @@
 
 class Solution {
 public:
-int findInMountainArray(int target, MountainArray& mountainArr) { int n=mountainArr.length(),peak=peakIndex(mountainArr,0,n-1),left=searchLeft(mountainArr,target,0,peak);
- if(mountainArr.get(left)==target) return left;
- int right=searchRight(mountainArr,target,peak+1,n-1); if(mountainArr.get(right)==target) return right; return -1; } int peakIndex(MountainArray& A,int l,int r){ while(l<r){
- int m=(l+r)/2; if(A.get(m)<A.get(m+1)) l=m+1; else r=m; } return l; } int searchLeft(MountainArray& A,int target,int l,int r){
-while(l<r){ int m=(l+r)/2; if(A.get(m)<target) l=m+1;
-else r=m; } return l; } int searchRight(MountainArray& A,int target,int l,int r){
-while(l<r){ int m=(l+r)/2; if(A.get(m)>target) l=m+1; else r=m; } return l; }};
+vector<TreeNode*> ans; unordered_set<int> del;
+ TreeNode* dfs(TreeNode* root) { if (!root) return nullptr; root->left = dfs(root->left); root->right = dfs(root->right); if (del.count(root->val)) { if (root->left) ans.push_back(root->left); if (root->right) ans.push_back(root->right); return nullptr; }
+return root; } vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) { del = unordered_set<int>(to_delete.begin(), to_delete.end()); root = dfs(root); if (root) ans.push_back(root); return ans; }};
