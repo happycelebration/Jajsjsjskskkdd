@@ -1,8 +1,13 @@
 # Yahan par aapko niche code milega
 
 
-class Solution {
+class ZeroEvenOdd {
+private:
+ int n; sem_t zeroSem; sem_t evenSem; sem_t oddSem;
 public:
-vector<TreeNode*> ans; unordered_set<int> del;
- TreeNode* dfs(TreeNode* root) { if (!root) return nullptr; root->left = dfs(root->left); root->right = dfs(root->right); if (del.count(root->val)) { if (root->left) ans.push_back(root->left); if (root->right) ans.push_back(root->right); return nullptr; }
-return root; } vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) { del = unordered_set<int>(to_delete.begin(), to_delete.end()); root = dfs(root); if (root) ans.push_back(root); return ans; }};
+ZeroEvenOdd(int n) { this->n = n;
+sem_init(&zeroSem, 0, 1); sem_init(&evenSem, 0, 0); sem_init(&oddSem, 0, 0); } void zero(function<void(int)> printNumber) { for (int i = 1; i <= n; i++) { sem_wait(&zeroSem);
+printNumber(0); if (i % 2 == 1) sem_post(&oddSem); else sem_post(&evenSem);}} void even(function<void(int)> printNumber) { for (int i = 2; i <= n; i += 2) { sem_wait(&evenSem);
+printNumber(i); sem_post(&zeroSem); }}
+ void odd(function<void(int)> printNumber) { for (int i = 1; i <= n; i += 2) { sem_wait(&oddSem);
+printNumber(i); sem_post(&zeroSem); }}};
