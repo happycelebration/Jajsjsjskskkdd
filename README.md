@@ -1,13 +1,13 @@
 # Yahan par aapko niche code milega
 
 
-class ZeroEvenOdd {
-private:
- int n; sem_t zeroSem; sem_t evenSem; sem_t oddSem;
+class Solution {
 public:
-ZeroEvenOdd(int n) { this->n = n;
-sem_init(&zeroSem, 0, 1); sem_init(&evenSem, 0, 0); sem_init(&oddSem, 0, 0); } void zero(function<void(int)> printNumber) { for (int i = 1; i <= n; i++) { sem_wait(&zeroSem);
-printNumber(0); if (i % 2 == 1) sem_post(&oddSem); else sem_post(&evenSem);}} void even(function<void(int)> printNumber) { for (int i = 2; i <= n; i += 2) { sem_wait(&evenSem);
-printNumber(i); sem_post(&zeroSem); }}
- void odd(function<void(int)> printNumber) { for (int i = 1; i <= n; i += 2) { sem_wait(&oddSem);
-printNumber(i); sem_post(&zeroSem); }}};
+vector<int> smallestSufficientTeam(vector<string>& req_skills,
+vector<vector<string>>& people) { int n = req_skills.size();bunordered_map<string,int> skillId; for(int i = 0; i < n; i++) skillId[req_skills[i]] = i;
+int target = (1 << n) - 1; vector<vector<int>> dp(1 << n); vector<bool> vis(1 << n, false); vis[0] = true;
+for(int i = 0; i < people.size(); i++) { int personMask = 0; for(string& skill : people[i]) if(skillId.count(skill)) personMask |= 1 << skillId[skill];
+auto curDp = dp; auto curVis = vis; for(int mask = 0; mask <= target; mask++) { if(!curVis[mask])
+ continue; int newMask = mask | personMask;
+if(!vis[newMask] || dp[newMask].size() > curDp[mask].size() + 1) { dp[newMask] = curDp[mask]; dp[newMask].push_back(i);
+vis[newMask] = true; }}} return dp[target]; }};
