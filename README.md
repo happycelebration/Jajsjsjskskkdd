@@ -3,4 +3,5 @@
 
 class Solution {
 public:
-bool winnerSquareGame(int n) { vector<bool> dp(n + 1, false); for (int i = 1; i <= n; ++i) { for (int j = 1; j * j <= i; ++j) { if (!dp[i - j * j]) { dp[i] = true; break; }}} return dp[n]; }};
+int missingInteger(vector<int>& nums) { int sum = nums[0]; for (int i = 1; i < nums.size(); ++i) { if (nums[i] != nums[i - 1] + 1) break; sum += nums[i]; }
+unordered_set<int> seen(nums.begin(), nums.end()); while (seen.count(sum)) ++sum; return sum; }};
