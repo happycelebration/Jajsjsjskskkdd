@@ -3,5 +3,8 @@
 
 class Solution {
 public:
-int missingInteger(vector<int>& nums) { int sum = nums[0]; for (int i = 1; i < nums.size(); ++i) { if (nums[i] != nums[i - 1] + 1) break; sum += nums[i]; }
-unordered_set<int> seen(nums.begin(), nums.end()); while (seen.count(sum)) ++sum; return sum; }};
+int maxSubarrayLength(vector<int>& nums, int k) {
+unordered_map<int, int> freq; int left = 0, ans = 0;
+for (int right = 0; right < nums.size(); ++right) {
+freq[nums[right]]++; while (freq[nums[right]] > k) {
+freq[nums[left]]--; left++; } ans = max(ans, right - left + 1);} return ans; }};
