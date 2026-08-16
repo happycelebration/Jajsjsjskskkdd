@@ -3,4 +3,5 @@
 
 class Solution {
 public:
-int longestSubsequence(vector<int>& nums) { int x = 0; for (int num : nums) x ^= num; if (x != 0) return nums.size(); for (int num : nums) { if (num != 0) return nums.size() - 1; } return 0; }};
+bool stoneGameIX(vector<int>& stones) { int cnt[3] = {}; for (int x : stones) cnt[x % 3]++; if (cnt[0] % 2 == 0) return cnt[1] > 0 && cnt[2] > 0;
+return abs(cnt[1] - cnt[2]) > 2; }};
