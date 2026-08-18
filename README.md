@@ -1,9 +1,6 @@
 # Yahan par aapko niche code milega
 
 
-class Solution { vector<vector<int>> dp; vector<int> prefix; vector<int> nums; int dfs(int l, int r) { if (l >= r) return 0; if (dp[l][r] != -1) return dp[l][r]; int ans = 0; int left = 0; int right = prefix[r + 1] - prefix[l]; for (int i = l; i < r; ++i) { left += nums[i];
-right -= nums[i]; if (left < right) { if (ans > 2 * left)
-continue; ans = max(ans, left + dfs(l, i)); }  else if (left > right) { if (ans > 2 * right) break; ans = max(ans, right + dfs(i + 1, r)); } else { ans = max({
- ans, left + dfs(l, i), right + dfs(i + 1, r)}); }} return dp[l][r] = ans; }
+class Solution {
 public:
-int stoneGameV(vector<int>& stoneValue) { nums = stoneValue; int n = nums.size(); prefix.assign(n + 1, 0); for (int i = 0; i < n; ++i) prefix[i + 1] = prefix[i] + nums[i]; dp.assign(n, vector<int>(n, -1)); return dfs(0, n - 1); }};
+int largestInteger(vector<int>& nums, int k) { int n = nums.size(); int count[51] = {}; for (int i = 0; i <= n - k; ++i) { bool seen[51] = {}; for (int j = i; j < i + k; ++j) seen[nums[j]] = true; for (int x = 0; x <= 50; ++x) { if (seen[x]) count[x]++; }} for (int x = 50; x >= 0; --x) { if (count[x] == 1) return x; } return -1; }};
