@@ -3,4 +3,5 @@
 
 class Solution {
 public:
-int largestInteger(vector<int>& nums, int k) { int n = nums.size(); int count[51] = {}; for (int i = 0; i <= n - k; ++i) { bool seen[51] = {}; for (int j = i; j < i + k; ++j) seen[nums[j]] = true; for (int x = 0; x <= 50; ++x) { if (seen[x]) count[x]++; }} for (int x = 50; x >= 0; --x) { if (count[x] == 1) return x; } return -1; }};
+vector<int> resultArray(vector<int>& nums) {
+vector<int> arr1 = {nums[0]}; vector<int> arr2 = {nums[1]}; for (int i = 2; i < nums.size(); ++i) { if (arr1.back() > arr2.back()) arr1.push_back(nums[i]); else arr2.push_back(nums[i]); } arr1.insert(arr1.end(), arr2.begin(), arr2.end()); return arr1; }};
