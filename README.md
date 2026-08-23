@@ -3,6 +3,8 @@
 
 class Solution {
 public:
-bool checkDivisibility(int n) { int x = n; int sum = 0;
- int product = 1; while (x > 0) { int digit = x % 10;
-sum += digit; product *= digit; x /= 10; } return n % (sum + product) == 0; }};
+bool sumGame(string num) { int n = num.size();
+int left = 0, right = 0; int qLeft = 0, qRight = 0; for (int i = 0; i < n / 2; ++i) { if (num[i] == '?') ++qLeft;
+else left += num[i] - '0'; } for (int i = n / 2; i < n; ++i) {
+if (num[i] == '?') ++qRight; else right += num[i] - '0'; }
+int diff = left - right; int qDiff = qLeft - qRight; if (qDiff % 2 != 0) return true; return 2 * diff + 9 * qDiff != 0; }};
